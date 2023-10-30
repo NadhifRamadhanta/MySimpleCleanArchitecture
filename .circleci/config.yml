@@ -6,8 +6,6 @@ orbs:
 jobs:
   build:
     executor: android/android
-    docker:
-      - image: circleci/openjdk:17-jdk # Gunakan gambar Docker yang menyertakan JDK 17
     steps:
       - checkout
       - restore_cache:
@@ -15,6 +13,9 @@ jobs:
       - run:
           name: Chmod permissions
           command: sudo chmod +x ./gradlew
+      - run:
+          name: Set JDK Version
+          command: echo 'export JAVA_HOME=/usr/local/openjdk-17' >> $BASH_ENV
       - run:
           name: Download Dependencies
           command: ./gradlew androidDependencies
